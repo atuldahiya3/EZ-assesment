@@ -37,7 +37,7 @@ export default function ColumnView({ column, onUpdate }: Props) {
   };
 
   return (
-    <div style={{ width: 260, padding: 12, border: "1px solid #ddd" }}>
+    <div className="column">
       <h3>{column.title}</h3>
 
       {column.cards.map((card) => (
@@ -49,7 +49,9 @@ export default function ColumnView({ column, onUpdate }: Props) {
         />
       ))}
 
-      <button onClick={addCard}>Add Card</button>
+      <button className="add-btn" onClick={addCard}>
+        + Add Card
+      </button>
     </div>
   );
 }

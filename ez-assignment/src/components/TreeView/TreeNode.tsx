@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { TreeNodeData } from "./tree.types";
 import { fetchChildren } from "../../data/treeMock";
+import "./tree.css";
 
 interface Props {
   node: TreeNodeData;
@@ -25,7 +26,7 @@ export default function TreeNode({ node }: Props) {
 
   const addChild = () => {
     const value = prompt("Enter node name");
-    if (!value) return;
+    if (!value?.trim()) return;
 
     setChildren((prev) => [
       ...prev,
@@ -36,17 +37,19 @@ export default function TreeNode({ node }: Props) {
 
   const removeNode = () => {
     if (window.confirm("Delete this node and its children?")) {
-      alert("In real app this would be removed from parent state");
+      alert("Remove logic handled by parent in real app");
     }
   };
 
   return (
-    <div style={{ marginLeft: 16 }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-        {node.hasChildren && (
-          <button onClick={toggle} disabled={loading}>
-            {expanded ? "-" : "+"}
+    <div className="tree-node">
+      <div className="node-row">
+        {node.hasChildren ? (
+          <button className="expand-btn" onClick={toggle}>
+            {expanded ? "−" : "+"}
           </button>
+        ) : (
+          <div style={{ width: 20 }} />
         )}
 
         {editing ? (
@@ -57,19 +60,29 @@ export default function TreeNode({ node }: Props) {
             autoFocus
           />
         ) : (
-          <span onDoubleClick={() => setEditing(true)}>{name}</span>
+          <span
+            className="node-name"
+            onDoubleClick={() => setEditing(true)}
+          >
+            {name}
+          </span>
         )}
 
-        <button onClick={addChild}>＋</button>
-        <button onClick={removeNode}>🗑</button>
+        <div className="node-actions">
+          <button className="action-btn" onClick={addChild}>＋</button>
+          <button className="action-btn" onClick={removeNode}>🗑</button>
+        </div>
       </div>
 
-      {loading && <div>Loading...</div>}
+      {loading && <div className="loading">Loading...</div>}
 
-      {expanded &&
-        children.map((child) => (
-          <TreeNode key={child.id} node={child} />
-        ))}
+      {expanded && (
+        <div className="children">
+          {children.map((child) => (
+            <TreeNode key={child.id} node={child} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

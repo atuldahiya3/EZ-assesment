@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { Card } from "./kanban.types";
+import "./kanban.css";
 
 interface Props {
   card: Card;
@@ -12,12 +13,13 @@ export default function CardView({ card, onDelete, onEdit }: Props) {
   const [value, setValue] = useState(card.title);
 
   const save = () => {
+    if (!value.trim()) return;
     setEditing(false);
     onEdit(value);
   };
 
   return (
-    <div style={{ padding: 8, border: "1px solid #ccc", marginBottom: 8 }}>
+    <div className="card">
       {editing ? (
         <input
           value={value}
@@ -30,7 +32,9 @@ export default function CardView({ card, onDelete, onEdit }: Props) {
         <p onDoubleClick={() => setEditing(true)}>{card.title}</p>
       )}
 
-      <button onClick={onDelete}>🗑</button>
+      <div className="card-actions">
+        <button onClick={onDelete}>🗑</button>
+      </div>
     </div>
   );
 }

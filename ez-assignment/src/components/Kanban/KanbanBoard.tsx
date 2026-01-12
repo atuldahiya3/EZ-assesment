@@ -7,7 +7,7 @@ export default function KanbanBoard() {
   const [columns, setColumns] = useState<Column[]>(initialBoard);
 
   return (
-    <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+    <div className="board">
       {columns.map((col) => (
         <ColumnView
           key={col.id}
@@ -20,5 +20,5 @@ export default function KanbanBoard() {
         />
       ))}
     </div>
-  );
+);
 }
