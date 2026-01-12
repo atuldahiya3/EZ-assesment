@@ -1,0 +1,10 @@
+.board {
+  display: flex;
+  gap: 16px;
+}
+
+@media (max-width: 768px) {
+  .board {
+    flex-direction: column;
+  }
+}
